@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="gameApp">
+  <head>
+    <title>Adventurino</title>
+    <script src="bundle.js"></script>
+    <link rel="stylesheet" href="bundle.css">
+  </head>
+  <body>
+    <main ng-controller="GameController as gameCtrl">
+      <h1>Adventurino</h1>
+      <form name="gameForm" novalidate>
+        <label for="direction">Direction:</label>
+        <select name="direction" ng-model="gameForm.direction">
+          <option ng-repeat="direction in gameCtrl.directions" value="{{direction}}">{{direction}}</option>
+        </select>
+        <button type="button" ng-click="gameCtrl.moveDirection(gameForm.direction)">Move</button>
+      </form>
+      <section class="hud">
+        <h3> Player: {{ gameCtrl.player.name}} </h3>
+        <p> Health: {{ gameCtrl.player.health }}</p>
+        <p> Location: {{ gameCtrl.player.location}} </p>
+      </section>
+      <section class="hud" ng-if="gameCtrl.isMonster">
+        <h3> The {{ gameCtrl.monster.name }} appeared </h3>
+        <p> Health: {{ gameCtrl.monster.health }} </p>
+        <form name="hydraForm">
+          <button type="button" ng-click="gameCtrl.fight()">Attack</button>
+        </form>
+      </section>
+      <ol>
+        <li ng-repeat="action in gameCtrl.history">{{ action.action }}</li>
+      </ol>
+    </main>
+  </body>
+</html>
